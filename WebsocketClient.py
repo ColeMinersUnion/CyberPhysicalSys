@@ -47,11 +47,12 @@ class client:
             elif message["Type"] == "Command":
                 print(message["Message"])
         
-            if(randint(0, 10) == 2 and len(self.others) > 0):
-               await websocket.send(self.genMsg("Command", self.others[0], msg="Hey!"))
+            #if(randint(0, 10) == 2 and len(self.others) > 0):
+                #await websocket.send(self.genMsg("Command", self.others[0], msg="Hey!"))
                 
             if randint(0, 20) == 5:
                 print(bcolors.BOLD + bcolors.FAIL + "About to close the websocket!" + bcolors.ENDC + bcolors.ENDC)
+                await websocket.send(self.genMsg("Close", "Serveer"))
                 return True
 
 

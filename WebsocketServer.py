@@ -54,7 +54,7 @@ class MyServer:
         await websocket.send(self.genMsg("Welcome", list(self.connections)[-1], msg=list(others)))
 
         self.logMsg(bcolors.OKCYAN + "Got here just fine" + bcolors.ENDC)
-
+        
         message = await websocket.recv()
         message = json.loads(message)
 
@@ -63,9 +63,10 @@ class MyServer:
             if(message["Type"] == "Command"):
                 await self.Talk(message)
 
-            if randint(0, 20) == 9:
-                self.logMsg(bcolors.FAIL + "CLOSING THE CONNECTION" + bcolors.ENDC)
-                await websocket.send(self.genMsg("Close", message["Sender"], msg="NULL"))
+            if(message["Type"] == "Close"):
+                del self.connections[message["Sender"]]
+                return 0
+
 
             time.sleep(2)
             await websocket.send(self.genMsg("PONG", message["Sender"]))
@@ -102,7 +103,7 @@ class MyServer:
         
 
 
-
+#I set up this server in its own file since I'm only ever going to need one of these.
 print("\n" * 5)
 server = MyServer("localhost", 8080)
 server.start()

@@ -1,1 +1,5 @@
-[93mAbout to start the server[0m
+[93mAbout to start the server[0m[92mThe server is up and running[0m
+[92mCONNECTION SUCCESSFUL[0m
+[1m{'2345jkla': <websockets.legacy.server.WebSocketServerProtocol object at 0x104618750>}[0m
+[96mGot here just fine[0m
+[95mPONG[0m
