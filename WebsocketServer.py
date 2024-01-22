@@ -8,19 +8,24 @@ from PrintColors import bcolors
 class MyServer:
 
     def __init__(self, Domain, port, file="logs.txt") -> None:
-        self.Domain = Domain
-        self.port = port
-        self.file = file
-        self.connections = {}
+        #Class initializer.
+        self.Domain = Domain    #this is the domain through which I access the websocket
+        self.port = port        #this is an extension of the domain
+        self.file = file        #File to log events
+        self.connections = {}   #A Dictionary (aka hashmap) of the websocket objects connected ot the server
 
 
-    def start(self):
+    def start(self): 
+        #you can make your outputs fun colors
         print(bcolors.WARNING + "About to start the server" + bcolors.ENDC)
 
         with open(self.file, "w") as file:
             file.writelines(bcolors.WARNING + "About to start the server" + bcolors.ENDC)
 
+        """THIS INITIALIZES THE SERVER"""
         self.server = websockets.serve(self.handlerFunc, self.Domain, self.port)
+
+        """THIS"""
         asyncio.get_event_loop().run_until_complete(self.server)
         asyncio.get_event_loop().run_forever()
 
