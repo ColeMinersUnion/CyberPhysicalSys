@@ -2,7 +2,6 @@ import websockets
 import asyncio
 import time
 import json
-from random import randint
 from PrintColors import bcolors
 
 class MyServer:
