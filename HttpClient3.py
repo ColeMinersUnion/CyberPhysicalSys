@@ -1,7 +1,6 @@
 #parsing through several pages on a website
 import requests #alternatively people also use http.client
 import cv2
-import numpy as np
 import shutil
 
 #from bs4 import BeautifulSoup 
