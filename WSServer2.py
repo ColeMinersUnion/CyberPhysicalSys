@@ -3,6 +3,7 @@ import asyncio
 import json #not nessecary but common practice
 
 class MyServer:
+    """MULTILINE COMMENT"""
 
     def __init__(self, dom, port):
         self.Domain = dom
