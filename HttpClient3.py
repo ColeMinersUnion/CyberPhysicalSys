@@ -2,6 +2,7 @@
 import requests #alternatively people also use http.client
 import cv2
 import shutil
+from ffpyplayer.player import MediaPlayer
 
 #from bs4 import BeautifulSoup 
 #this means that I can create a website with clues through a GitHub Pages
@@ -12,34 +13,25 @@ response = requests.get(MyUri, stream=True) #using a GET method on the URI. I di
 print(response)
 with open ("Video.mp4", "wb") as file:
     response.raw.decode_content = True
-    shutil.copyfileobj(response.raw, file)
+    shutil.copyfileobj(response.raw, file) #copies our file 
 
 #playing the video
-capture = cv2.VideoCapture("Video.mp4")
-if (capture.isOpened()== False): 
-    print("Error opening video file") 
-  
-# Read until video is completed 
-while(capture.isOpened()): 
-      
-# Capture frame-by-frame 
-    ret, frame = capture.read() 
-    if ret == True: 
-    # Display the resulting frame 
-        cv2.imshow('Frame', frame) 
-          
-    # Press Q on keyboard to exit 
-        if cv2.waitKey(25) & 0xFF == ord('q'): 
+def PlayVideo(video_path):
+    video=cv2.VideoCapture(video_path)
+    player = MediaPlayer(video_path)
+    while True:
+        grabbed, frame=video.read()
+        audio_frame, val = player.get_frame()
+        if not grabbed:
+            print("End of video")
             break
-  
-# Break the loop 
-    else: 
-        break
-  
-# When everything done, release 
-# the video capture object 
-capture.release() 
-  
-# Closes all the frames 
-cv2.destroyAllWindows() 
-#now we can send different urls and edit the url several times to get an assortment of data
+        if cv2.waitKey(28) & 0xFF == ord("q"):
+            break
+        cv2.imshow("Video", frame)
+        if val != 'eof' and audio_frame is not None:
+            #audio
+            img, t = audio_frame
+    video.release()
+    cv2.destroyAllWindows()
+
+PlayVideo("Video.mp4")
